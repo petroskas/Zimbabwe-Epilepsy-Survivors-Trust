@@ -2,7 +2,7 @@ ZEST WEBSITE - GITHUB PAGES, PHP AND MYSQL
 ================================================
 
 GITHUB PAGES
-- The public static site is https://petroskas.github.io/zest1/.
+- The public static site is https://petroskas.github.io/Zimbabwe-Epilepsy-Survivors-Trust/.
 - Pushes to main publish the HTML, CSS, JavaScript, images, supplied video
   illustrations and seizure dataset.
 - GitHub Pages serves static files only. JavaScript uses email/WhatsApp actions
