@@ -8,18 +8,6 @@ GITHUB PAGES
 - GitHub Pages serves static files only. JavaScript uses email/WhatsApp actions
   for contact and story submissions when PHP is unavailable; PHP and MySQL are
   needed to store submissions and demonstration counts in the database.
-- Section navigation focuses on the selected section; use Home to restore the
-  full one-page site. Seizure videos load on selection and require an explicit
-  play action.
-- Video meetings are request-only. ZEST management reviews and schedules each
-  request and shares any meeting link directly; the website does not create or
-  launch public meeting rooms.
-- The training portal includes short epilepsy aid, disability inclusion,
-  caregiver, school/workplace, accessible-communication and mental-wellbeing
-  lessons. On PHP hosting, enrollment requests use the contact endpoint; on
-  GitHub Pages, learners can send requests by email or WhatsApp. Lesson progress
-  is stored only in the learner's browser; there are no user accounts,
-  cloud-synced progress or certificates.
 
 LOCAL OR PHP-CAPABLE WEBSITE (XAMPP)
 1. Copy the project to C:\xampp\htdocs\zest1.
@@ -63,6 +51,3 @@ GITHUB DEPLOYMENT
 - GitHub Pages cannot run PHP or MySQL. Point a PHP-capable domain to this
   project to enable database storage; use the static email/WhatsApp fallbacks
   on GitHub Pages.
-- A managed cloud database, authenticated learner accounts, synchronized
-  progress and scheduled meeting links require a separately provisioned
-  backend; they are not simulated by the static GitHub Pages site.

@@ -36,14 +36,13 @@
 <!-- Header -->
 <header class="site-header" id="top">
   <div class="wrap head-in">
-    <a href="#home" class="brand" aria-label="ZEST home">
+    <a href="#top" class="brand" aria-label="ZEST home">
       <img src="images/logo.png" alt="ZEST logo" class="brand-logo" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'brand-mark',textContent:'Z'}))">
       <span class="brand-text"><b>ZEST</b><small>Advocate · Educate · Motivate</small></span>
     </a>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="main-nav" id="mainNav" aria-label="Main">
       <ul>
-        <li><a href="#home">Home</a></li>
         <li class="has-sub"><a href="#about">About epilepsy ▾</a>
           <div class="sub">
             <a href="#firstaid">Seizure first aid</a>
@@ -62,7 +61,6 @@
           </div></li>
         <li><a href="#types">Seizure types</a></li>
         <li><a href="#meet">Video meeting</a></li>
-        <li><a href="#portal">Training portal</a></li>
         <li><a href="#impact">Our impact</a></li>
         <li><a href="#campaigns">Campaigns</a></li>
         <li><a href="#involved">Get involved</a></li>
@@ -141,10 +139,10 @@
 <article class="tcard"><small>Whole brain</small><h3>Atonic (“drop attacks”)</h3><ul><li>Sudden loss of muscle tone; head drops or person falls</li><li>Very brief, recovers quickly</li><li>High injury risk, so a helmet may be advised</li></ul><button class="btn btn-primary" data-demo="at">Watch video</button></article>
 <article class="tcard"><small>Whole brain</small><h3>Tonic</h3><ul><li>Sudden stiffening of muscles, often in sleep</li><li>Usually under a minute</li><li>May cause a fall if standing</li></ul><button class="btn btn-primary" data-demo="to">Watch video</button></article>
 </div>
-<div class="demo reveal"><div class="demo-video-wrap"><video id="stage" controls playsinline preload="metadata" aria-label="Selected educational seizure illustration video" hidden></video><p id="demoVideoFallback" class="demo-video-fallback" role="status">Choose a seizure type to load its video illustration.</p></div>
-<div><h3 id="demoTitle">Choose a seizure type</h3><p id="demoText" aria-live="polite">Select a type below to see how it appears and what a bystander should do. Press play when you're ready to watch.</p>
+<div class="demo reveal"><div class="demo-video-wrap"><video id="stage" controls autoplay muted loop playsinline preload="auto" aria-label="Autoplaying seizure video illustration"></video><p id="demoVideoFallback" class="demo-video-fallback" role="status" hidden></p></div>
+<div><h3 id="demoTitle">Choose a seizure type</h3><p id="demoText" aria-live="polite">Select a type below to see how it appears and what a bystander should do.</p>
 <div class="demo-tabs" id="demoTabs"><button data-demo="tc">Tonic-clonic</button><button data-demo="ab">Absence</button><button data-demo="fa">Focal</button><button data-demo="my">Myoclonic</button><button data-demo="at">Atonic</button><button data-demo="to">Tonic</button></div>
-<button class="btn btn-gold" id="demoRead" disabled>🔊 Read aloud</button><p id="demoStatus" class="small" role="status" aria-live="polite">Choose a seizure type to read its first-aid guidance.</p><p class="calm">Videos load only after you select a type and play only when you press play. They are educational, not diagnostic; consult a health professional.</p></div></div>
+<button class="btn btn-gold" id="demoRead">🔊 Read aloud</button><p id="demoStatus" class="small" role="status" aria-live="polite">Choose a seizure type to read its first-aid guidance.</p><p class="calm">Videos autoplay muted and can be paused or unmuted with the controls. They are educational, not diagnostic; consult a health professional.</p></div></div>
 </div></section>
 
 <!-- Learn -->
@@ -171,78 +169,11 @@
 <!-- Meet -->
 <section class="section tint" id="meet"><div class="wrap">
 <div class="center reveal"><p class="eyebrow dark">Video support</p><h2>Meet with ZEST online</h2><p>Support groups, counselling and awareness training, anywhere in Zimbabwe.</p></div>
-<div class="meeting-request"><div class="box"><h3>Request a private video session</h3><p>ZEST staff review and schedule every meeting request. No meeting room is created or opened from this website. Once your request is approved, the team will contact you with the time and a private meeting link.</p><p class="calm">For your privacy, do not include medical records or sensitive health details in your request.</p><a class="btn btn-primary" href="#contact" data-enquiry="video">Request a meeting with ZEST</a></div></div>
-</div></section>
-
-<!-- Training portal -->
-<section class="section" id="portal"><div class="wrap">
-<div class="center reveal"><p class="eyebrow dark">ZEST learning portal</p><h2>Learn at your pace. Build a more inclusive community.</h2><p>Request a place in a ZEST course, study short lessons and keep track of your progress on this device.</p></div>
-<div class="portal-cloud"><b>Cloud-ready learning</b><span>This responsive portal is hosted as a static site. Enrollment requests go to ZEST for review; lesson progress stays in this browser and is not synced to an account. ZEST will confirm any live class or meeting separately.</span></div>
-<div class="portal-layout">
-<div class="box portal-register"><h3>Register for training</h3><p>Choose a course and send an enrollment request. ZEST will contact you to confirm availability and next steps.</p>
-<form class="form" id="portalForm" novalidate>
-<label for="portalName">Name<input id="portalName" name="name" required maxlength="120" autocomplete="name"></label>
-<label for="portalEmail">Email<input id="portalEmail" name="email" type="email" required maxlength="190" autocomplete="email"></label>
-<label for="portalPhone">Phone / WhatsApp (optional)<input id="portalPhone" name="phone" type="tel" maxlength="40" autocomplete="tel"></label>
-<label for="portalCourse">Course
-<select id="portalCourse" name="course" required>
-<option value="">Choose a course</option>
-<option value="first-aid">Epilepsy and seizure first aid</option>
-<option value="disability-inclusion">Disability inclusion and rights</option>
-<option value="family-support">Family and caregiver support</option>
-<option value="inclusive-schools">Inclusive schools and workplaces</option>
-<option value="accessible-communication">Accessible communication and sign-language awareness</option>
-<option value="mental-wellbeing">Mental wellbeing and stigma</option>
-</select></label>
-<label class="hp" aria-hidden="true">Leave this field empty<input name="website" tabindex="-1" autocomplete="off"></label>
-<button class="btn btn-primary" type="submit">Send enrollment request</button>
-<p id="portalMsg" role="status" aria-live="polite"></p><div id="portalActions" class="form-actions" hidden></div>
-</form></div>
-<div class="course-list" aria-label="ZEST training classes">
-<article class="course-card" data-course-card="first-aid">
-<p class="course-tag">Epilepsy awareness · 3 lessons</p><h3>Epilepsy and seizure first aid</h3><p>Recognize seizures and respond safely without stigma.</p>
-<details class="course-lesson"><summary>1. Understanding epilepsy</summary><p>Epilepsy is a neurological condition. Seizures can look different, and one seizure does not always mean epilepsy.</p><label><input type="checkbox" data-course-progress value="basics"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>2. First aid: stay, safe, side</summary><p>Stay and time the seizure, clear nearby hazards, cushion the head, do not restrain the person or put anything in their mouth, and turn them on their side when safe.</p><label><input type="checkbox" data-course-progress value="first-aid"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>3. When to seek emergency help</summary><p>Get urgent help for a seizure lasting 5 minutes or more, repeated seizures without recovery, injury, breathing problems or a first seizure.</p><label><input type="checkbox" data-course-progress value="emergency"> Mark lesson complete</label></details>
-<progress value="0" max="3" aria-label="Epilepsy and seizure first aid progress"></progress><p class="course-progress-label">0 of 3 lessons complete on this device.</p><button class="btn btn-ghost" type="button" data-course-enrol="first-aid">Request this course</button>
-</article>
-<article class="course-card" data-course-card="disability-inclusion">
-<p class="course-tag">Inclusion · 3 lessons</p><h3>Disability inclusion and rights</h3><p>Support dignity, access and participation for people with disabilities.</p>
-<details class="course-lesson"><summary>1. Dignity and disability</summary><p>Use respectful language, ask before helping and recognize each person's independence and choices.</p><label><input type="checkbox" data-course-progress value="dignity"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>2. Removing barriers</summary><p>Consider physical, communication and attitudinal barriers. Offer reasonable accommodations and accessible information.</p><label><input type="checkbox" data-course-progress value="access"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>3. Rights and participation</summary><p>Include people with disabilities in decisions that affect them, and consult Zimbabwe's disability policy and legislation.</p><label><input type="checkbox" data-course-progress value="rights"> Mark lesson complete</label></details>
-<progress value="0" max="3" aria-label="Disability inclusion and rights progress"></progress><p class="course-progress-label">0 of 3 lessons complete on this device.</p><button class="btn btn-ghost" type="button" data-course-enrol="disability-inclusion">Request this course</button>
-</article>
-<article class="course-card" data-course-card="family-support">
-<p class="course-tag">Care and support · 3 lessons</p><h3>Family and caregiver support</h3><p>Build a supportive home environment with the person at the centre.</p>
-<details class="course-lesson"><summary>1. Make a seizure support plan</summary><p>With the person's consent, note seizure signs, first aid, emergency contacts and any guidance from their health team.</p><label><input type="checkbox" data-course-progress value="care-plan"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>2. Support treatment safely</summary><p>Encourage clinic follow-up and prescribed medicine routines. Never change or stop medication without advice from a qualified health professional.</p><label><input type="checkbox" data-course-progress value="treatment"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>3. Wellbeing and stigma</summary><p>Listen without blame, protect privacy and make space for the wellbeing of caregivers as well as the person with epilepsy.</p><label><input type="checkbox" data-course-progress value="wellbeing"> Mark lesson complete</label></details>
-<progress value="0" max="3" aria-label="Family and caregiver support progress"></progress><p class="course-progress-label">0 of 3 lessons complete on this device.</p><button class="btn btn-ghost" type="button" data-course-enrol="family-support">Request this course</button>
-</article>
-<article class="course-card" data-course-card="inclusive-schools">
-<p class="course-tag">Education and employment · 3 lessons</p><h3>Inclusive schools and workplaces</h3><p>Prepare staff and peers to respond safely and reduce barriers to learning and work.</p>
-<details class="course-lesson"><summary>1. Plan for safety</summary><p>Agree on a practical seizure response plan, identify who will help, and keep emergency contacts accessible.</p><label><input type="checkbox" data-course-progress value="planning"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>2. Make reasonable adjustments</summary><p>Discuss useful adjustments directly with the person, such as breaks, catch-up support or safer task arrangements.</p><label><input type="checkbox" data-course-progress value="adjustments"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>3. Challenge discrimination</summary><p>Correct misinformation, maintain confidentiality and make decisions based on the person's abilities and needs.</p><label><input type="checkbox" data-course-progress value="inclusion"> Mark lesson complete</label></details>
-<progress value="0" max="3" aria-label="Inclusive schools and workplaces progress"></progress><p class="course-progress-label">0 of 3 lessons complete on this device.</p><button class="btn btn-ghost" type="button" data-course-enrol="inclusive-schools">Request this course</button>
-</article>
-<article class="course-card" data-course-card="accessible-communication">
-<p class="course-tag">Accessible communication · 3 lessons</p><h3>Accessible communication and sign-language awareness</h3><p>Improve access for deaf people and people with varied communication needs.</p>
-<details class="course-lesson"><summary>1. Communicate with respect</summary><p>Address the person directly, ask how they prefer to communicate and give time to respond.</p><label><input type="checkbox" data-course-progress value="respect"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>2. Make information accessible</summary><p>Use plain language, clear layouts and alternative formats. Check understanding without making assumptions.</p><label><input type="checkbox" data-course-progress value="formats"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>3. Deaf awareness</summary><p>Ask before using gestures or writing, face the person when speaking and arrange a qualified interpreter when needed.</p><label><input type="checkbox" data-course-progress value="deaf-awareness"> Mark lesson complete</label></details>
-<progress value="0" max="3" aria-label="Accessible communication and sign-language awareness progress"></progress><p class="course-progress-label">0 of 3 lessons complete on this device.</p><button class="btn btn-ghost" type="button" data-course-enrol="accessible-communication">Request this course</button>
-</article>
-<article class="course-card" data-course-card="mental-wellbeing">
-<p class="course-tag">Wellbeing and peer support · 3 lessons</p><h3>Mental wellbeing and stigma</h3><p>Promote compassionate, non-judgmental support for people affected by epilepsy.</p>
-<details class="course-lesson"><summary>1. Listen and support</summary><p>Ask what support the person wants, listen without blame and respect their privacy and choices.</p><label><input type="checkbox" data-course-progress value="listen"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>2. Challenge stigma</summary><p>Correct harmful myths calmly, avoid defining people by a diagnosis and encourage participation in community life.</p><label><input type="checkbox" data-course-progress value="stigma"> Mark lesson complete</label></details>
-<details class="course-lesson"><summary>3. Find appropriate help</summary><p>Encourage people to discuss persistent distress with a qualified health professional. If someone may be in immediate danger, seek urgent local help.</p><label><input type="checkbox" data-course-progress value="referral"> Mark lesson complete</label></details>
-<progress value="0" max="3" aria-label="Mental wellbeing and stigma course progress"></progress><p class="course-progress-label">0 of 3 lessons complete on this device.</p><button class="btn btn-ghost" type="button" data-course-enrol="mental-wellbeing">Request this course</button>
-</article>
-</div></div>
-<p class="small">Lessons are general education, not medical or legal advice. Course completion is not a professional qualification or certificate. For safeguarding and privacy, do not enter sensitive medical details.</p>
+<div class="meet"><div class="box"><h3>Google Meet</h3><p class="small">Start a new meeting or join one with its code.</p><a class="btn btn-primary" href="https://meet.new" target="_blank" rel="noopener">Host a new Google Meet</a>
+<input id="meetCode" placeholder="Code e.g. abc-defg-hij" aria-label="Meeting code"><button class="btn btn-gold" id="meetJoin">Join meeting</button>
+<hr><h3>Book a session</h3><p class="small">Pick a time and we will email you the Meet link.</p><a class="btn btn-ghost" href="#contact" data-enquiry="training">Request a session</a>
+<a class="btn btn-ghost" id="calLink" target="_blank" rel="noopener" href="#">Add to Google Calendar</a></div>
+<div class="box"><h3>Open ZEST room (no account needed)</h3><p class="small">Free in-page video room for quick group chats.</p><button class="btn btn-primary" id="jitsiBtn">Start video room</button><div id="jitsi" hidden></div></div></div>
 </div></section>
 
 <!-- First aid -->
@@ -593,7 +524,6 @@
           <option value="partner">Partner / donor</option>
           <option value="volunteer">Volunteer</option>
           <option value="training">Book awareness training</option>
-          <option value="video">Request a video meeting with ZEST</option>
         </select>
       </label>
       <label>Message<textarea name="msg" rows="4" required maxlength="3000"></textarea></label>
@@ -609,7 +539,7 @@
 <footer class="footer">
   <div class="wrap foot-grid">
     <div><b class="foot-brand">ZEST</b><p>Zimbabwe Epilepsy Survivors Trust. Empowering survivors, ending stigma, sparking hope.</p><img class="foot-logo" src="images/logo.png" alt="ZEST logo" width="96" height="96" loading="lazy"></div>
-    <div><h4>Learn</h4><a href="#about">About epilepsy</a><a href="#types">Seizure types &amp; videos</a><a href="#learn">Triggers &amp; safety</a><a href="#meet">Video meeting requests</a><a href="#portal">Training portal</a><a href="#firstaid">First aid</a><a href="#myths">Myths &amp; facts</a><a href="#resources">Resources</a><a href="#faqs">FAQs</a><a href="#disability-resources">Disability reading room</a><a href="#stories">Share your story</a><a href="#campaigns">Campaigns</a><a href="#gallery">Gallery</a></div>
+    <div><h4>Learn</h4><a href="#about">About epilepsy</a><a href="#types">Seizure types &amp; videos</a><a href="#learn">Triggers &amp; safety</a><a href="#meet">Video meeting</a><a href="#firstaid">First aid</a><a href="#myths">Myths &amp; facts</a><a href="#resources">Resources</a><a href="#faqs">FAQs</a><a href="#disability-resources">Disability reading room</a><a href="#stories">Share your story</a><a href="#campaigns">Campaigns</a><a href="#gallery">Gallery</a></div>
     <div><h4>Support</h4><a href="#services">Services</a><a href="#stories">Our message</a><a href="#contact">Contact</a></div>
     <div><h4>Reach us</h4><a href="https://wa.me/263784582491">WhatsApp</a><a href="tel:+263713989953">Call</a><a href="mailto:zimbabweepilepsysurvivorstrust@gmail.com">Email</a><span class="foot-addr">11903 First Street, Norton, Zimbabwe</span></div>
   </div>
@@ -622,6 +552,6 @@
 
 <button class="totop" id="totop" aria-label="Back to top">↑</button>
 <script src="js/main.js"></script>
-<script src="js/inclusive.js?v=20261120-1"></script>
+<script src="js/inclusive.js?v=20261110-1"></script>
 </body>
 </html>
