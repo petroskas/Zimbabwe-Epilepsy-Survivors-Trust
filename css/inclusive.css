@@ -39,7 +39,6 @@ body.a-cursor,body.a-cursor *{cursor:url("data:image/svg+xml;utf8,<svg xmlns='ht
 .truth b{color:var(--gold)}
 .meet{display:grid;grid-template-columns:1fr 1fr;gap:24px}.meet .box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
 .meet input,.meet select{width:100%;padding:11px;border-radius:10px;border:2px solid var(--line);margin:6px 0;background:var(--bg);color:var(--ink)}
-#jitsi{height:420px;border-radius:14px;overflow:hidden;margin-top:12px;background:#000}
 .mapbox{margin-top:30px;border-radius:16px;overflow:hidden;border:2px solid #ffffff33}.mapbox iframe{width:100%;height:300px;border:0;display:block}
 @media(max-width:800px){.demo,.meet{grid-template-columns:1fr}}
 @media(max-width:800px){.demo video,.demo-video-fallback{min-height:240px}}

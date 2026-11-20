@@ -15,6 +15,31 @@
   burger.onclick = () => { const o = nav.classList.toggle('open'); burger.setAttribute('aria-expanded', o); };
   $$('#mainNav a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); burger.setAttribute('aria-expanded', false); }));
 
+  // Focus navigation on one section; Home restores the full one-page site.
+  const pageSections = $$('main > section'), pageFooter = $('footer');
+  const showSection = () => {
+    const hash = location.hash;
+    const target = hash ? document.getElementById(hash.slice(1)) : null;
+    const section = target && target.closest('main > section');
+    const home = hash === '#home' || !section;
+    pageSections.forEach(item => { item.hidden = !home && item !== section; });
+    pageFooter.hidden = !home;
+    $$('a[href^="#"]').forEach(link => {
+      if (link.getAttribute('href') === (home ? '#home' : hash)) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+    requestAnimationFrame(() => {
+      if (home) {
+        if (hash === '#home') scrollTo({ top: 0, behavior: 'smooth' });
+        else if (target) target.scrollIntoView({ block: 'start' });
+      } else {
+        (target === section ? section : target).scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }
+    });
+  };
+  addEventListener('hashchange', showSection);
+  showSection();
+
   // Reveal on scroll
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
   $$('.reveal').forEach(el => io.observe(el));
@@ -52,7 +77,7 @@
   // Search (jump to matching section)
   const idx = { 'first aid': '#firstaid', seizure: '#firstaid', help: '#firstaid', myth: '#myths', fact: '#myths', witchcraft: '#myths',
     treatment: '#resources', resource: '#resources', infographic: '#resources', shona: '#resources', learn: '#resources', children: '#services', child: '#services', kids: '#services', norton: '#contact', address: '#contact', support: '#services', counselling: '#services', school: '#services', work: '#services', donate: '#donate', volunteer: '#involved',
-    news: '#news', campaign: '#campaigns', poster: '#campaigns', gallery: '#gallery', photo: '#gallery', training: '#services', 'sign language': '#services', job: '#involved', employ: '#involved', hire: '#involved', ecocash: '#donate', mental: '#news', contact: '#contact', about: '#about', epilepsy: '#about', story: '#stories', stories: '#stories' };
+    news: '#news', campaign: '#campaigns', poster: '#campaigns', gallery: '#gallery', photo: '#gallery', training: '#portal', course: '#portal', courses: '#portal', portal: '#portal', enrol: '#portal', enroll: '#portal', elearning: '#portal', 'e-learning': '#portal', 'sign language': '#portal', job: '#involved', employ: '#involved', hire: '#involved', ecocash: '#donate', mental: '#news', contact: '#contact', about: '#about', epilepsy: '#about', story: '#stories', stories: '#stories' };
   $('#searchForm').onsubmit = e => {
     e.preventDefault();
     const q = $('#searchInput').value.trim().toLowerCase(), m = $('#searchMsg');
@@ -143,8 +168,12 @@
     addActionLink(actions, '', `https://wa.me/263784582491?text=${encodeURIComponent(text)}`, 'Notify ZEST on WhatsApp');
   };
 
-  // Pre-select enquiry type from "Volunteer / Hire / Book training" links
-  $$('[data-enquiry]').forEach(a => a.addEventListener('click', () => { const sel = $('#enquiryType'); if (sel) sel.value = a.dataset.enquiry; }));
+  // Pre-select the enquiry type from volunteer, training and meeting links.
+  $$('[data-enquiry]').forEach(a => a.addEventListener('click', () => {
+    const sel = $('#enquiryType');
+    if (sel) sel.value = a.dataset.enquiry;
+    if (a.dataset.enquiry === 'video') $('#contactForm').elements.msg.value = 'I would like to request a video meeting with ZEST.\nPreferred dates and times:\nGeneral purpose (optional):';
+  }));
 
   const formActions = (container, email, whatsapp) => {
     container.replaceChildren();
@@ -152,6 +181,92 @@
     addActionLink(container, '', `https://wa.me/263784582491?text=${encodeURIComponent(whatsapp)}`, 'Send with WhatsApp');
     container.hidden = false;
   };
+
+  const portalForm = $('#portalForm');
+  const courseNames = {
+    'first-aid': 'Epilepsy and seizure first aid',
+    'disability-inclusion': 'Disability inclusion and rights',
+    'family-support': 'Family and caregiver support',
+    'inclusive-schools': 'Inclusive schools and workplaces',
+    'accessible-communication': 'Accessible communication and sign-language awareness',
+    'mental-wellbeing': 'Mental wellbeing and stigma'
+  };
+  $$('[data-course-enrol]').forEach(button => button.addEventListener('click', () => {
+    $('#portalCourse').value = button.dataset.courseEnrol;
+    $('#portalName').focus();
+  }));
+  portalForm.onsubmit = async e => {
+    e.preventDefault();
+    const status = $('#portalMsg'), actions = $('#portalActions');
+    const name = portalForm.elements.name.value.trim();
+    const email = portalForm.elements.email.value.trim();
+    const phone = portalForm.elements.phone.value.trim();
+    const course = portalForm.elements.course.value;
+    status.textContent = '';
+    actions.replaceChildren();
+    actions.hidden = true;
+    if (!name || !/^\S+@\S+\.\S+$/.test(email) || !courseNames[course]) {
+      status.textContent = 'Enter your name, a valid email address and a course.';
+      return;
+    }
+    if (portalForm.elements.website.value.trim()) return;
+
+    const message = `Training portal enrollment request: ${courseNames[course]}. Please contact me with the schedule and next steps.`;
+    const subject = `ZEST training enrollment request: ${courseNames[course]}`;
+    const emailBody = `Name: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nCourse: ${courseNames[course]}\n\n${message}`;
+    const whatsapp = `Hello ZEST, I would like to request enrollment in ${courseNames[course]}. My name is ${name}, email ${email}${phone ? `, phone ${phone}` : ''}. Please share the schedule and next steps.`;
+    const submit = portalForm.querySelector('[type=submit]');
+    submit.disabled = true;
+    status.textContent = 'Sending your request to ZEST…';
+    try {
+      const response = await fetch('api/contact.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ name, email, phone, type: 'training', msg: message, website: '' })
+      });
+      if (!response.ok) throw new Error('Enrollment request could not be saved.');
+      const result = await response.json();
+      if (!result.ok) throw new Error(result.error || 'Enrollment request could not be saved.');
+      status.textContent = 'Your request was recorded. ZEST will contact you to confirm enrollment and course details.';
+      portalForm.reset();
+    } catch (error) {
+      status.textContent = 'Choose how to send your enrollment request to ZEST:';
+      formActions(actions, { subject, body: emailBody }, whatsapp);
+    } finally {
+      submit.disabled = false;
+    }
+  };
+
+  const courseProgressKey = 'zest-course-progress-v1';
+  let courseProgress = {};
+  try {
+    const savedProgress = JSON.parse(localStorage.getItem(courseProgressKey) || '{}');
+    if (savedProgress && typeof savedProgress === 'object' && !Array.isArray(savedProgress)) courseProgress = savedProgress;
+  } catch (error) {}
+  const courseCards = $$('.course-card[data-course-card]');
+  const renderCourseProgress = card => {
+    const course = card.dataset.courseCard;
+    const checks = $$('[data-course-progress]', card);
+    const completed = Array.isArray(courseProgress[course]) ? courseProgress[course] : [];
+    checks.forEach(check => { check.checked = completed.includes(check.value); });
+    const done = checks.filter(check => check.checked).length;
+    $('progress', card).value = done;
+    $('.course-progress-label', card).textContent = `${done} of ${checks.length} lessons complete on this device.`;
+  };
+  courseCards.forEach(card => {
+    renderCourseProgress(card);
+    $$('[data-course-progress]', card).forEach(check => check.addEventListener('change', () => {
+      const course = card.dataset.courseCard;
+      const completed = $$('[data-course-progress]:checked', card).map(item => item.value);
+      courseProgress[course] = completed;
+      renderCourseProgress(card);
+      try {
+        localStorage.setItem(courseProgressKey, JSON.stringify(courseProgress));
+      } catch (error) {
+        $('.course-progress-label', card).textContent = 'Progress is visible now but could not be saved in this browser.';
+      }
+    }));
+  });
 
   $('#contactForm').onsubmit = async e => {
     e.preventDefault(); const f = e.currentTarget; let ok = true;

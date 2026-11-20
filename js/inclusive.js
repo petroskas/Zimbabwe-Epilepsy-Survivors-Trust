@@ -43,7 +43,7 @@ addEventListener('keydown',e=>{if(e.key==='Escape'){pn.hidden=true;stop()}
 // ---- voice commands
 let rec;function listen(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return say('Voice commands are not supported in this browser. Try Chrome.');
  rec=new SR();rec.lang=voiceLang==='en-GB'?'en-GB':'en-ZW';rec.onresult=e=>cmd(e.results[0][0].transcript.toLowerCase());rec.onerror=()=>{};rec.start();say('Listening')}
-function cmd(t){const go={'first aid':'#firstaid','myth':'#myths','types':'#types','seizure types':'#types','triggers':'#learn','learn':'#learn','contact':'#contact','donate':'#donate','meeting':'#meet','video':'#meet','map':'#contact','services':'#services','news':'#news'};
+function cmd(t){const go={'first aid':'#firstaid','myth':'#myths','types':'#types','seizure types':'#types','triggers':'#learn','learn':'#learn','contact':'#contact','donate':'#donate','meeting':'#meet','video':'#meet','training':'#portal','portal':'#portal','map':'#contact','services':'#services','news':'#news'};
  const k=Object.keys(go).find(x=>t.includes(x));
  if(t.includes('read'))readPage();else if(t.includes('stop'))stop();else if(t.includes('contrast')){S.contrast=!S.contrast;save();apply()}else if(t.includes('bigger')||t.includes('larger')){S.size=Math.min((S.size||100)+10,160);save();apply()}else if(k){location.hash=go[k];say('Going to '+k)}else say('Sorry, I heard '+t)}
 // ---- seizure demos
@@ -92,6 +92,7 @@ const stage=$('#stage'),videoFallback=$('#demoVideoFallback');
 stage.addEventListener('error',()=>{videoFallback.textContent='This video could not be played. Try another seizure type or check your connection.';videoFallback.hidden=false});
 function demo(k,shouldScroll=true){
  $('#demoTitle').textContent=D[k][0];$('#demoText').textContent=D[k][1];
+ $('#demoRead').disabled=false;
  $$('#demoTabs button').forEach(b=>b.classList.toggle('on',b.dataset.demo===k));
  $('#demoRead').onclick=()=>say(D[k][0]+'. '+D[k][1]);
  const source=demoVideos[k];
@@ -99,7 +100,6 @@ function demo(k,shouldScroll=true){
   stage.hidden=false;
   videoFallback.hidden=true;videoFallback.textContent='';
   if(stage.getAttribute('src')!==source){stage.src=source;stage.load()}
-  stage.play().catch(()=>{videoFallback.textContent='Autoplay was blocked. Press play to start the video.';videoFallback.hidden=false});
  }else{
   stage.pause();stage.hidden=true;stage.removeAttribute('src');stage.load();
   videoFallback.textContent='A matching tonic-clonic video illustration is not available yet. Use the first-aid guidance above.';
@@ -109,7 +109,6 @@ function demo(k,shouldScroll=true){
  if(shouldScroll)stage.scrollIntoView({block:'nearest'});
 }
 $$('[data-demo]').forEach(b=>b.onclick=()=>{demo(b.dataset.demo);recordDemoView(b.dataset.demo)});
-demo('ab',false);
 // ---- learn tabs
 const lt=$$('#ltabs button'),lp=$$('.lpanel');lt.forEach(b=>b.onclick=()=>{lt.forEach(x=>x.classList.toggle('on',x===b));lp.forEach((p,i)=>p.classList.toggle('on',i==b.dataset.l));if(S.audio)say(lp[b.dataset.l].textContent)});
 // ---- diary
@@ -121,10 +120,6 @@ $('#diaryDl').onclick=()=>{const c='Date,Type,Trigger\n'+diary.map(d=>[d.d,d.t,d
 // ---- medicine reminder
 let medT;$('#medSet').onclick=async()=>{const t=$('#medTime').value;if(!t)return $('#medMsg').textContent='Pick a time first.';if('Notification' in window)await Notification.requestPermission();clearInterval(medT);
  medT=setInterval(()=>{const n=new Date(),h=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');if(h===t&&n.getSeconds()<2){const m='Time to take your epilepsy medicine.';say(m);if(Notification.permission==='granted')new Notification('ZEST reminder',{body:m})}},1000);$('#medMsg').textContent='Reminder set for '+t+' daily while this page is open.'};
-// ---- Meet
-$('#meetJoin').onclick=()=>{const c=$('#meetCode').value.trim().toLowerCase();if(/^[a-z]{3}-[a-z]{4}-[a-z]{3}$/.test(c))open('https://meet.google.com/'+c,'_blank','noopener');else announce('Enter a code like abc-defg-hij')};
-$('#calLink').href='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('ZEST support session')+'&details='+encodeURIComponent('Add a Google Meet link from the Calendar event.')+'&location='+encodeURIComponent('Google Meet');
-$('#jitsiBtn').onclick=function(){const j=$('#jitsi');j.hidden=false;this.hidden=true;j.innerHTML='<iframe title="ZEST video room" allow="camera;microphone;fullscreen;display-capture" style="width:100%;height:100%;border:0" src="https://meet.jit.si/ZEST-Zimbabwe-Epilepsy-Support-Room"></iframe>'};
 // ---- SOS
 const sos=document.createElement('a');sos.id='sosBtn';sos.href='tel:+263784582491';sos.textContent='🆘 Help line';sos.setAttribute('aria-label','Call ZEST help line');document.body.append(sos);
 // ---- init
